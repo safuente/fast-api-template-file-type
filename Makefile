@@ -29,13 +29,13 @@ rm:
 pull:
 	$(DOCKER_COMPOSE) pull
 
-# Run unit tests locally (A .env file should be created in app folder with env vars needed)
+# Run unit tests locally
 test:
-	$(DOCKER_COMPOSE) exec app bash -c "python -m pytest"
+	$(DOCKER_COMPOSE) run --rm app bash -c "python -m pytest -vvs"
 
-# Run code linter
+# Run code linter (Black)
 lint:
-	$(DOCKER_COMPOSE) run --rm app flake8
+	$(DOCKER_COMPOSE) run --rm app black .
 
 # Access to container bash
 bash:
@@ -47,4 +47,4 @@ migrate:
 
 # Execute last migration file
 exec-migration:
-	$(DOCKER_COMPOSE) run --rm app alembic upgrade head"
+	$(DOCKER_COMPOSE) run --rm app alembic upgrade head
